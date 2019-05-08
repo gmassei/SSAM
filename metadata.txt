@@ -1,0 +1,35 @@
+[general]
+name=SSAM
+qgisMinimumVersion=2.99
+qgisMaximumVersion=3.99
+description=Spatial Sustainability Assessment Model (SSAM)
+version=0.9.0
+
+
+# end of mandatory metadata
+
+# Optional items:
+
+# Uncomment the following line and add your changelog entries:
+# changelog= wrong bug tracker in metadata fixed (https://github.com/gmassei/SSAM/issues)
+
+# tags are comma separated with spaces allowed
+tags=Sustainability, Geographic MCDA, Vector
+
+
+homepage=http://maplab.alwaysdata.net/SSAM.html
+tracker=https://github.com/gmassei/SSAM/issues
+repository=https://github.com/gmassei/SSAM
+icon=icon.png
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version
+deprecated=False
+
+about= SSAM is a QGIS plugin for sustainability assessment in geographic environment, using environmental, economic and social criteria. The outputs of SSAM are both geographic and graphic. More data and documents are available on http://maplab.alwaysdata.net/SSAM.html
+category=Vector
+
+# Author contact information
+author=ARPA Umbria - University of Perugia (Developer: Gianluca Massei)
+email=g_massa@libero.it
