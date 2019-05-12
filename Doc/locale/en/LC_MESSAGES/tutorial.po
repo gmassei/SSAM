@@ -1,0 +1,158 @@
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: geoUmbriaSUIT 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-13 22:17+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ..\..\tutorial.rst:8
+msgid "geoUmbriaSUIT's Tutorial"
+msgstr ""
+
+#: ..\..\tutorial.rst:11
+msgid "Tutorial"
+msgstr ""
+
+#: ..\..\tutorial.rst:14
+msgid "Step 0 - Load geoUmbriaSUIT"
+msgstr ""
+
+#: ..\..\tutorial.rst:16
+msgid ""
+"Load the file “regioni_test”, select it in QGIS  and run geoUmbriaSUIT from "
+"the menu: **Plugin/geoUmbriaSUIT/geoUmbriaSUIT** (or pressing the icon on "
+"the toolbar)."
+msgstr ""
+
+#: ..\..\tutorial.rst:26
+msgid "Step 1 - Setting"
+msgstr ""
+
+#: ..\..\tutorial.rst:28
+msgid ""
+"The page “Setting” shows the default setting parameters; if the values "
+"proposed are acceptable, we can press “OK” button."
+msgstr ""
+
+#: ..\..\tutorial.rst:37
+msgid "Step 2 - Environmental criteria"
+msgstr ""
+
+#: ..\..\tutorial.rst:39
+msgid ""
+"The page “Environmental criteria” shows the default values for the "
+"environmental assessment. For each criterion  (in the column header) the "
+"label , the weight, the preference (cost or gain), the ideal and worst point"
+" values are shown as default values. The user can change the values  and "
+"with the button “Save”  he can register  the changes.  Pressing the “Apply” "
+"button the user run the  calculus for assessment  of environmental index"
+msgstr ""
+
+#: ..\..\tutorial.rst:46
+msgid "Step 3 - Economic criteria"
+msgstr ""
+
+#: ..\..\tutorial.rst:48
+msgid ""
+"The page “Economic criteria” has the same structure as the environmental, "
+"even the parameters are all the same meaning. With the button “Apply” we can"
+" run the model for the assessment of economics index."
+msgstr ""
+
+#: ..\..\tutorial.rst:55
+msgid "Step 4 - Social criteria"
+msgstr ""
+
+#: ..\..\tutorial.rst:57
+msgid ""
+"The parameters in page “Social criteria” have the same meaning as those in  "
+"Environmental and Economics assessment. The user can perform the calculation"
+" of social index pressing “Apply” button."
+msgstr ""
+
+#: ..\..\tutorial.rst:64
+msgid "Step 5 - Output maps"
+msgstr ""
+
+#: ..\..\tutorial.rst:66
+msgid ""
+"All the indexes are calculated and now we can build the maps and the graph  "
+"showing the output. The user has to press **“Load maps”**  button in "
+"**\"Analysis\"** page for to load in QGIS four maps: \"EnvIdeal\" "
+"(Environmental index), \"EcoIdeal\" (Economics index), \"SocIdeal\" (Social "
+"index) and the overall sustainability index map, named “SustIdeal”."
+msgstr ""
+
+#: ..\..\tutorial.rst:72
+msgid "Analysis page"
+msgstr ""
+
+#: ..\..\tutorial.rst:80
+msgid "Output map example"
+msgstr ""
+
+#: ..\..\tutorial.rst:84
+msgid "Step 6 - Output charts"
+msgstr ""
+
+#: ..\..\tutorial.rst:86
+msgid ""
+"From the combo box **“Label field”** in the **\"Analysis\"** page the user "
+"has to choose the field of the attributes table that identifies the  name of"
+" “research unit” ( eg. the name of the region). Pressing the “Graph” button,"
+" geoUmbriaSUIT opens a html page in the browser with four graph. The first "
+"shows a stack – histogram whose the overall height is proportional to "
+"sustainability value as the sum (linear combination) of the three indexes "
+"(environmental, economics and social value).  The second graph is a “bobble-"
+"graph” whose position, dimension and colors  of bobbles provide information "
+"about sustainability and the its three dimension. In particular, the x-axis "
+"Is ordered with the environmental index, the y-axis is ordered with "
+"economics index, the color (from red to green) is ordered with social index "
+"and the dimension of bobble is proportional with the sustainability value.  "
+"The third and the fourth graphs are quite similar to the the first two, but "
+"they are “static” and they doesn't require an internet active connection."
+msgstr ""
+
+#: ..\..\tutorial.rst:95
+msgid "Step 7 - Extract rules"
+msgstr ""
+
+#: ..\..\tutorial.rst:97
+msgid ""
+"The last page, named **“Rules”**,  supply a tool for data  discovery and "
+"back analysis of the assessment .Pressing the button “Extract rules”, the "
+"user gets the rules derived from  ranking performed from geoUmbriaSUIT, "
+"based on five sustainability classes . Selecting a single rule, all the "
+"regions that support those rules will be selected in yellow on the maps in "
+"QGIS."
+msgstr ""
+
+#: ..\..\tutorial.rst:103
+msgid "Rules extraction example (rule 12)"
+msgstr ""
+
+#: ..\..\tutorial.rst:110
+msgid "Rules extraction example (rule 2)"
+msgstr ""
+
+#: ..\..\tutorial.rst:115
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ..\..\tutorial.rst:116
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ..\..\tutorial.rst:117
+msgid ":ref:`search`"
+msgstr ""
+
+#: ..\..\tutorial.rst:119
+msgid "."
+msgstr ""

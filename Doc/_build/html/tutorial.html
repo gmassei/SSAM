@@ -1,0 +1,201 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Spatial Sustainability Assessment Model - SSAM’s tutorial &#8212; geoUmbriaSUIT 0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Bibliography" href="bibliography.html" />
+    <link rel="prev" title="SSAM’s manual" href="manual.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="bibliography.html" title="Bibliography"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="manual.html" title="SSAM’s manual"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">geoUmbriaSUIT 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spatial-sustainability-assessment-model-ssam-s-tutorial">
+<h1>Spatial Sustainability Assessment Model - SSAM’s <strong>tutorial</strong><a class="headerlink" href="#spatial-sustainability-assessment-model-ssam-s-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-0-load-ssam">
+<h3>Step 0 - Load SSAM<a class="headerlink" href="#step-0-load-ssam" title="Permalink to this headline">¶</a></h3>
+<p>Load the file “regioni_test”, select it in QGIS  and run SSAM from the menu: <strong>Plugin/SSAM/SSAM</strong> (or pressing the icon on the toolbar).</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/LoadPlugin.jpg"><img alt="_images/LoadPlugin.jpg" src="_images/LoadPlugin.jpg" style="height: 300px;" /></a>
+</div>
+</div>
+<div class="section" id="step-1-setting">
+<h3>Step 1 - Setting<a class="headerlink" href="#step-1-setting" title="Permalink to this headline">¶</a></h3>
+<p>The page “Setting” shows the default setting parameters; if the values proposed are acceptable, we can press the “OK” button.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/setting.jpg"><img alt="_images/setting.jpg" src="_images/setting.jpg" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="step-2-environmental-criteria">
+<h3>Step 2 - Environmental criteria<a class="headerlink" href="#step-2-environmental-criteria" title="Permalink to this headline">¶</a></h3>
+<p>the page “Environmental criteria” shows the default values for the environmental assessment. For each criterion  (in the column header) the label, the weight, the preference (cost or gain), the ideal and worst point values are shown as default values. The user can change the values,  and with the button “Save”  he can register  the changes.  Pressing the “Apply” button the user runs the  calculation for the assessment  of the environmental index.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/env.jpg"><img alt="_images/env.jpg" src="_images/env.jpg" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="step-3-economic-criteria">
+<h3>Step 3 - Economic criteria<a class="headerlink" href="#step-3-economic-criteria" title="Permalink to this headline">¶</a></h3>
+<p>The page “Economic criteria” has the same structure than the environmental one, even the parameters have all the same meaning. With the button “Apply” we can run the model for the assessment of the economic index.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/eco.jpg"><img alt="_images/eco.jpg" src="_images/eco.jpg" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="step-4-social-criteria">
+<h3>Step 4 - Social criteria<a class="headerlink" href="#step-4-social-criteria" title="Permalink to this headline">¶</a></h3>
+<p>The parameters in the “Social criteria” page have the same meaning than those for  Environmental and Economic assessment. The user can perform the calculation of the social index pressing the “Apply” button.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/analysis.jpg"><img alt="_images/analysis.jpg" src="_images/analysis.jpg" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="step-5-output-maps">
+<h3>Step 5 - Output maps<a class="headerlink" href="#step-5-output-maps" title="Permalink to this headline">¶</a></h3>
+<p>All the indexes are calculated and now we can build the maps and the graph showing the outputs. The user has to press the “Load maps” button for loading four maps in QGIS: “EnvIdeal” (Environmental index), “EcoIdeal” (Economic index), “SocIdeal” (Social index) and the overall sustainability index map, named “SustIdeal”.</p>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="_images/analysis.jpg"><img alt="_images/analysis.jpg" src="_images/analysis.jpg" style="height: 500px;" /></a>
+<p class="caption"><span class="caption-text">Analysis page</span></p>
+</div>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="_images/sustMap.jpg"><img alt="_images/sustMap.jpg" src="_images/sustMap.jpg" style="height: 500px;" /></a>
+<p class="caption"><span class="caption-text">Output map example</span></p>
+</div>
+</div>
+<div class="section" id="step-6-output-charts">
+<h3>Step 6 - Output charts<a class="headerlink" href="#step-6-output-charts" title="Permalink to this headline">¶</a></h3>
+<p>From the combo box “Label field” the user has to choose the field of the attributes table that identifies the name of the “research unit” (eg. the name of the region). Pressing the “Graph” button, SSAM opens a html page in the browser with four graphs. The first shows a stack – histogram whose the overall height is proportional to the sustainability value as the sum (linear combination) of the three indexes (environmental, economic and social values).  The second graph is a “bubble-graph”: the position, dimension and color  of bubbles provide information about sustainability and its three dimensions. In particular, the x-axis is ordered with the environmental index, the y-axis is ordered with the economic index, the color (from red to green) is ordered with the social index, while the dimension of  the bubble is proportional to the sustainability value.  The third and the fourth graphs are quite similar to the the first two, but they are “static” and they do not require an internet active connection.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/bar_G.jpg"><img alt="_images/bar_G.jpg" src="_images/bar_G.jpg" style="height: 500px;" /></a>
+</div>
+</div>
+<div class="section" id="step-7-extract-rules">
+<h3>Step 7 - Extract rules<a class="headerlink" href="#step-7-extract-rules" title="Permalink to this headline">¶</a></h3>
+<p>The last page, named <strong>Rules</strong>,  supplies a tool for data  discovery and back analysis of the assessment. Pressing the button “Extract rules”, the user gets the rules derived from the ranking performed by SSAM, based on five sustainability classes. Selecting a single rule, all the regions that support that rule will be selected in yellow on the maps in QGIS.</p>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="_images/rule_1.jpg"><img alt="_images/rule_1.jpg" src="_images/rule_1.jpg" style="height: 500px;" /></a>
+<p class="caption"><span class="caption-text">Rules extraction example (rule 12)</span></p>
+</div>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="_images/rule_3.jpg"><img alt="_images/rule_3.jpg" src="_images/rule_3.jpg" style="height: 500px;" /></a>
+<p class="caption"><span class="caption-text">Rules extraction example (rule 2)</span></p>
+</div>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+<p>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Spatial Sustainability Assessment Model - SSAM’s <strong>tutorial</strong></a><ul>
+<li><a class="reference internal" href="#tutorial">Tutorial</a><ul>
+<li><a class="reference internal" href="#step-0-load-ssam">Step 0 - Load SSAM</a></li>
+<li><a class="reference internal" href="#step-1-setting">Step 1 - Setting</a></li>
+<li><a class="reference internal" href="#step-2-environmental-criteria">Step 2 - Environmental criteria</a></li>
+<li><a class="reference internal" href="#step-3-economic-criteria">Step 3 - Economic criteria</a></li>
+<li><a class="reference internal" href="#step-4-social-criteria">Step 4 - Social criteria</a></li>
+<li><a class="reference internal" href="#step-5-output-maps">Step 5 - Output maps</a></li>
+<li><a class="reference internal" href="#step-6-output-charts">Step 6 - Output charts</a></li>
+<li><a class="reference internal" href="#step-7-extract-rules">Step 7 - Extract rules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="manual.html"
+                        title="previous chapter">SSAM’s <strong>manual</strong></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="bibliography.html"
+                        title="next chapter">Bibliography</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tutorial.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="bibliography.html" title="Bibliography"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="manual.html" title="SSAM’s manual"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">geoUmbriaSUIT 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, gianluca massei.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Welcome to SSAM’s documentation! &#8212; geoUmbriaSUIT 0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SSAM’s manual" href="manual.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="manual.html" title="SSAM’s manual"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">geoUmbriaSUIT 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-ssam-s-documentation">
+<h1>Welcome to SSAM’s documentation!<a class="headerlink" href="#welcome-to-ssam-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Spatial Sustainability Assessment Model (SSAM)</p>
+<div class="section" id="index">
+<h2>Index<a class="headerlink" href="#index" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">SSAM’s <strong>manual</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manual.html#description-of-spatial-sustainability-assessment-model-ssam">Description of Spatial Sustainability Assessment Model (SSAM)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#running-ssam">Running SSAM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual.html#outputs">Outputs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Spatial Sustainability Assessment Model - SSAM’s <strong>tutorial</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#tutorial">Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#step-0-load-ssam">Step 0 - Load SSAM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#step-1-setting">Step 1 - Setting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#step-2-environmental-criteria">Step 2 - Environmental criteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#step-3-economic-criteria">Step 3 - Economic criteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#step-4-social-criteria">Step 4 - Social criteria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#step-5-output-maps">Step 5 - Output maps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#step-6-output-charts">Step 6 - Output charts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#step-7-extract-rules">Step 7 - Extract rules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>SSAM is a QGIS plugin for sustainability assessment in geographic environment, using environmental,  economic and social criteria.
+It implements the algorithm  TOPSIS <strong>[2]</strong> which defines a ranking based on distance from the worst point and  closeness to an ideal point, for each used criteria.
+Entry of  weights can be done directly, if known, or  with the use of a pairwise comparison  table; in this way the user is led to define  a final vector weight, by means of a repeatable and verifiable path.</p>
+<p>The plugin works in QGIS <strong>[3]</strong>, a free and open source geographic software, widely used in several fields. With QGIS and python it is quite simple extend the software functionality and build new plugin.</p>
+<p>SSAM is hosted in the official qgis plugin repository [<a class="reference external" href="http://plugins.qgis.org/plugins/">http://plugins.qgis.org/plugins/</a>] and is available under GNU GPL licence.
+The outputs of SSAM are both geographic and graphic. The first show the maps of the multicriteria analysis results for each elementary  area. The graphic output shows the numerical value of sustainability, with the use of  bars , bubbles and points .</p>
+<p>The plugin implements the DOMLEM [4] algorithm based on the “dominance based rough set” theory [5]. With its use the user can know the decisional rules derived from the TOPSIS algorithm and have a better overview of  the ranking  of sustainability shown by maps and graphs. The transparency, the  analysis and the  back analysis capability are extremely increased.</p>
+<p>The plugin SSAM uses a geographic vector file, eg. a shapefile, where the graphic data represent the single evaluation units (for example countries, regions or municipalities), while the alphanumeric data  (the attribute table), describe the environmental, economic and social indicators. The use of the algorithms available in the plugin allow to treat separately the indicators representing the three dimensions of sustainability, and to compute three different indexes. The linear combination of the three  indexes gives  a overall sustainability index for each geographic unit.</p>
+<p>The user can use a wide number of indicators (the same number of those present in the shapefile) or he can use a set of data prepared by himself. However, using the data supplied from ARPA Umbria grants more robustness and repeatability  of output.
+In the next paragraphs we will use “plugin” and “SSAM” as synonymous.
+We intend for “research unit” an administrative unit described by environmental, economic and social indicators (eg.  municipality, province, region, country, etc.) .
+The numeric output of SSAM is the “sustainability index”, given from the linear combination of three different indexes: environmental index, economic index and social index. Higher is the value of those  indexes and better is the performance of a single “research unit”.</p>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to SSAM’s documentation!</a><ul>
+<li><a class="reference internal" href="#index">Index</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="manual.html"
+                        title="next chapter">SSAM’s <strong>manual</strong></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="manual.html" title="SSAM’s manual"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">geoUmbriaSUIT 0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2014, gianluca massei.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

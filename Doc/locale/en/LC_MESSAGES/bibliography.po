@@ -1,0 +1,70 @@
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: geoUmbriaSUIT 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-13 22:17+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ..\..\bibliography.rst:9
+msgid "Bibliography"
+msgstr ""
+
+#: ..\..\bibliography.rst:11
+msgid ""
+"[1] Boggia A. et al. (2007): Il modello di monitoraggio software UmbriaSUIT "
+"1.0, ARPA Umbria, Perugia."
+msgstr ""
+
+#: ..\..\bibliography.rst:13
+msgid ""
+"[2] Hwang C. L. and Yoon K. Multiple Objective Decision Making Methods and "
+"Applications, A State-of-the-Art Survey . Springer - Verlag, 1981."
+msgstr ""
+
+#: ..\..\bibliography.rst:15
+msgid ""
+"[3] QGIS Development Team, 2013. QGIS Geographic Information System. Open "
+"Source Geospatial Foundation Project. http://qgis.osgeo.org"
+msgstr ""
+
+#: ..\..\bibliography.rst:17
+msgid ""
+"[4] Salvatore Greco , Benedetto Matarazzo , Roman Slowinski , Jerzy "
+"Stefanowski, An Algorithm for Induction of Decision Rules Consistent with "
+"the Dominance Principle, Revised Papers from the Second International "
+"Conference on Rough Sets and Current Trends in Computing, p.304-313, October"
+" 16-19, 2000"
+msgstr ""
+
+#: ..\..\bibliography.rst:19
+msgid ""
+"[5] Greco, S., Matarazzo, B., Słowiński, R.: Rough sets theory for multi-"
+"criteria decision analysis. European Journal of Operational Research, 129, 1"
+" (2001) 1–47"
+msgstr ""
+
+#: ..\..\bibliography.rst:23
+msgid "Indices and tables"
+msgstr ""
+
+#: ..\..\bibliography.rst:25
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ..\..\bibliography.rst:26
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ..\..\bibliography.rst:27
+msgid ":ref:`search`"
+msgstr ""
+
+#: ..\..\bibliography.rst:29
+msgid "."
+msgstr ""
