@@ -3,7 +3,7 @@ name=SSAM
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.99
 description=Spatial Sustainability Assessment Model (SSAM)
-version=0.9.0
+version=1.0.0
 
 
 # end of mandatory metadata
@@ -22,7 +22,7 @@ tracker=https://github.com/gmassei/SSAM/issues
 repository=https://github.com/gmassei/SSAM
 icon=icon.png
 # experimental flag
-experimental=True
+experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False

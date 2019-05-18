@@ -791,7 +791,6 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		ecoLabel=[(self.EcoWeighTableWidget.item(0, c).text()) for c in range(self.EcoWeighTableWidget.columnCount())]
 		socLabel=[(self.SocWeighTableWidget.item(0, c).text()) for c in range(self.SocWeighTableWidget.columnCount())]
 		label=envLabel+ecoLabel+socLabel
-		print(label)
 		criteria,preference,weight,ideal,worst=self.usedCriteria()
 		for l in label:
 			fileCfg.write(str(l)+";")
@@ -918,7 +917,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.RulesListWidget.clear()
 		for E in R:
 			self.RulesListWidget.addItem(E)
-		#self.RulesListWidget.itemClicked.connect(self.selectFeatures)
+		self.RulesListWidget.itemClicked.connect(self.selectFeatures)
 		rules.close()
 		return 0
 
@@ -936,13 +935,13 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		exp = QgsExpression(exp)
 		it=layer.getFeatures(QgsFeatureRequest(exp))
 		listOfResults=[i.id() for i in it]
-		print(it,exp)
 		return listOfResults
 
 
 	def selectFeatures(self):
 		"""select feature in attribute table based on rules"""
-		layer= self.iface.activeLayer()
+		activeLayer= self.iface.activeLayer()
+		baseLayer=self.base_Layer
 		#currentDIR = QgsProject.instance().readPath("./")
 		currentDIR = (os.path.dirname(str(self.base_Layer.source())))		
 		rulesPKL = open(os.path.join(currentDIR,"RULES.pkl"), 'rb')
@@ -952,8 +951,8 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		selectedRule=int(selectedRule.split(":")[0])
 		R=RULES[selectedRule-1]
 		exp=self.queryByRule(R)
-		idSel=self.extractFeaturesByExp(layer,exp)
-		layer.selectByIds(idSel)
+		idSel=self.extractFeaturesByExp(baseLayer,exp)
+		activeLayer.selectByIds(idSel)
 		return 0
 		
 
@@ -972,7 +971,6 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		rules=(os.path.join(currentDIR,"rules.rls"))
 		#filename = QFileDialog.getSaveFileName(self, 'Save File', os.getenv('HOME'),".rls")
 		filename = QFileDialog.getSaveFileName(self, 'Save File', ".rls") 
-		print (filename[0],filename)
 		shutil.copy2(rules, filename[0])
 		return 0
 
