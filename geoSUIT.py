@@ -52,7 +52,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.setupUi(self)
 		self.iface = iface
 		self.active_layer = self.iface.activeLayer()
-		self.base_Layer = self.iface.activeLayer()
+		self.base_layer = self.iface.activeLayer()
 		for i in range(1,self.toolBox.count()):
 			self.toolBox.setItemEnabled (i,False)
 		#self.SetBtnQuit.clicked.connect(self.reject)
@@ -229,7 +229,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		outputFilename=self.OutlEdt.text()
 		for i in range(1,(self.toolBox.count()-1)):
 			self.toolBox.setItemEnabled (i,True)
-		alayer = self.base_Layer #self.iface.activeLayer()
+		alayer = self.base_layer #self.iface.activeLayer()
 		provider = alayer.dataProvider()
 		fields = provider.fields()
 		writer = QgsVectorFileWriter(outputFilename, "CP1250", fields, alayer.wkbType(), alayer.crs(), "ESRI Shapefile")
@@ -290,7 +290,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			pass
 		
 	def readSettingFile(self,WeighTableWidget,fields):
-		pathSource = (os.path.dirname(str(self.base_Layer.source())))
+		pathSource = (os.path.dirname(str(self.base_layer.source())))
 		print("reading setting file")
 		try:
 			if (os.path.exists(os.path.join(pathSource,"setting.csv"))==True):
@@ -460,10 +460,10 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 ###########################################################################################
 	def extractFieldSumSquare(self,field):
 		"""Retrive single field value from attributes table"""
-		provider=self.base_Layer.dataProvider()
+		provider=self.base_layer.dataProvider()
 		fid=provider.fieldNameIndex(field)
 		listValue=[]
-		for feat in self.base_Layer.getFeatures():
+		for feat in self.base_layer.getFeatures():
 			attribute=feat.attributes()[fid]
 			listValue.append(attribute)
 		listValue=[pow(l,2) for l in listValue]
@@ -763,8 +763,8 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 	def exportTable(self):
 		try:
 			criteria=[self.EnvWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.EnvWeighTableWidget.columnCount())]
-			currentDIR = (os.path.dirname(str(self.base_Layer.source())))
-			bLayer=self.base_Layer
+			currentDIR = (os.path.dirname(str(self.base_layer.source())))
+			bLayer=self.base_layer
 			field_names = [field.name() for field in bLayer.fields()]+['EnvIdeal','EcoIdeal','SocIdeal','SustIdeal']
 			EnvValue=self.extractAttributeValue('EnvIdeal')
 			EcoValue=self.extractAttributeValue('EcoIdeal')
@@ -784,7 +784,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		
 ###################################################################################################
 	def saveCfg(self):
-		currentDIR = (os.path.dirname(str(self.base_Layer.source())))
+		currentDIR = (os.path.dirname(str(self.base_layer.source())))
 		setting=(os.path.join(currentDIR,"setting.csv"))
 		fileCfg = open(os.path.join(currentDIR,"setting.csv"),"w")
 		envLabel=[(self.EnvWeighTableWidget.item(0, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())]
@@ -843,22 +843,22 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		"""add new field"""
 		field="SustIdeal"
 		numberOfClasses=5
-		provider=self.base_Layer.dataProvider()
+		provider=self.base_layer.dataProvider()
 		#provider=self.active_layer.dataProvider()
 		if provider.fieldNameIndex("Classified")==-1:
-			self.addDecisionField(self.base_Layer,"Classified")
+			self.addDecisionField(self.base_layer,"Classified")
 		fidClass = provider.fieldNameIndex("Classified") #obtain classify field index from its name
 		listInput=self.extractAttributeValue(field)
 		widthOfClass=float((max(listInput))-float(min(listInput)))/float(numberOfClasses)
 		listClass=[(min(listInput)+(widthOfClass)*i) for i in range(numberOfClasses+1)]
 		#self.EnvTEdit.setText(str(listClass))
-		self.base_Layer.startEditing()
+		self.base_layer.startEditing()
 		decision=[]
-		for feat in self.base_Layer.getFeatures():
+		for feat in self.base_layer.getFeatures():
 			DiscValue=self.discretizeDecision(listInput[int(feat.id())],listClass,numberOfClasses)
-			self.base_Layer.changeAttributeValue(feat.id(), fidClass, float(DiscValue))
+			self.base_layer.changeAttributeValue(feat.id(), fidClass, float(DiscValue))
 			decision.append(DiscValue)
-		self.base_Layer.commitChanges()
+		self.base_layer.commitChanges()
 		return list(set(decision))
 
 	def usedCriteria(self):
@@ -880,7 +880,8 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		return criteria, preference,weight,ideal,worst
 		
 	def writeISFfile(self,decision):
-		currentDIR = (os.path.dirname(str(self.base_Layer.source())))
+		#currentDIR = (os.path.dirname(str(self.base_layer.source())))
+		currentDIR = (os.path.dirname(str(self.active_layer.source())))
 		out_file = open(os.path.join(currentDIR,"example.isf"),"w")
 		criteria,preference,weight,ideal,worst=self.usedCriteria()
 		criteria.append("Classified")
@@ -898,9 +899,9 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		for c,p in zip(criteria,preference):
 			out_file.write("%s: %s\n"  % (c,p))
 		out_file.write("\n**EXAMPLES\n")
-		provider=self.base_Layer.dataProvider()
+		provider=self.base_layer.dataProvider()
 		fids=[provider.fieldNameIndex(c) for c in criteria]  #obtain array fields index from its names
-		for feat in self.base_Layer.getFeatures():
+		for feat in self.base_layer.getFeatures():
 			attribute = [feat.attributes()[j] for j in fids]
 			for i in (attribute):
 				out_file.write(" %s " % (i))
@@ -911,7 +912,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 
 
 	def showRules(self):
-		currentDIR = (os.path.dirname(str(self.base_Layer.source())))
+		currentDIR = (os.path.dirname(str(self.base_layer.source())))
 		rules=open(os.path.join(currentDIR,"rules.rls"))
 		R=rules.readlines()
 		self.RulesListWidget.clear()
@@ -941,9 +942,9 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 	def selectFeatures(self):
 		"""select feature in attribute table based on rules"""
 		activeLayer= self.iface.activeLayer()
-		baseLayer=self.base_Layer
+		baseLayer=self.base_layer
 		#currentDIR = QgsProject.instance().readPath("./")
-		currentDIR = (os.path.dirname(str(self.base_Layer.source())))		
+		currentDIR = (os.path.dirname(str(self.base_layer.source())))		
 		rulesPKL = open(os.path.join(currentDIR,"RULES.pkl"), 'rb')
 		RULES=pickle.load(rulesPKL) #save RULES dict in a file for use it in geoRULES module
 		rulesPKL.close()
@@ -958,7 +959,9 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 
 
 	def extractRules(self):
-		pathSource=os.path.dirname(str(self.iface.activeLayer().source()))
+		pathSource=os.path.dirname(str(self.active_layer.source()))
+		print("active:%s;base:%s" % (os.path.dirname(str(self.active_layer.source())),os.path.dirname(str(self.base_layer.source()))))
+		#pathSource=os.path.dirname(str(self.iface.activeLayer().source()))
 		decision=self.addDiscretizedField()
 		self.writeISFfile(decision)
 		DOMLEM.main(pathSource)
@@ -967,7 +970,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		return 0
 		
 	def saveRules(self):
-		currentDIR = (os.path.dirname(str(self.base_Layer.source())))
+		currentDIR = (os.path.dirname(str(self.active_layer.source())))
 		rules=(os.path.join(currentDIR,"rules.rls"))
 		#filename = QFileDialog.getSaveFileName(self, 'Save File', os.getenv('HOME'),".rls")
 		filename = QFileDialog.getSaveFileName(self, 'Save File', ".rls") 
