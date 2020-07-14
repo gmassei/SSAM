@@ -42,9 +42,11 @@ def BuilHTMLGraph(suist,env,eco,soc,labels):
 			title: 'bars of sustainability',
 			isStacked: 'true',
 			legend:{position:'in'},
+            colors: ['#ff3300', '#33bbe5','#337719'],
 			};""")
 	HTMLfile.write("""	var optionsBarHor = {
 			legend:{position:'in'},
+            colors: ['#ff3300', '#33bbe5','#337719'],
 			};""")
 			
 	HTMLfile.write("""	var optionsBubble = {
