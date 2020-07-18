@@ -506,7 +506,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 				attributes=feat.attributes()[f]
 				value=(float(attributes)/float(sumSquareColumn[f]))*w   # TOPSIS algorithm: STEP 1 and STEP 2
 				#print sumSquareColumn[f]
-				self.active_layer.changeAttributeValue(feat.id(),f,round(value,4))
+				self.active_layer.changeAttributeValue(feat.id(),f,round(value,8))
 		self.active_layer.commitChanges()
 		return 0
 		
@@ -571,7 +571,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 				IP =IP+(float(attributes[f]-idp)**2)   # TOPSIS algorithm: STEP 4
 				WP =WP+(float(attributes[f]-wrp)**2)
 			relativeCloseness=(WP**(0.5))/((WP**(0.5))+(IP**(0.5)))
-			self.active_layer.changeAttributeValue(feat.id(), fldValue, round(float(relativeCloseness),4))
+			self.active_layer.changeAttributeValue(feat.id(), fldValue, round(float(relativeCloseness),8))
 			self.EnvProgressBar.setValue(progress)
 			self.EcoProgressBar.setValue(progress)
 			self.SocProgressBar.setValue(progress)

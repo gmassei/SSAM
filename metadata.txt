@@ -3,7 +3,7 @@ name=SSAM
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.99
 description=Spatial Sustainability Assessment Model (SSAM)
-version=1.0.1
+version=1.0.2
 
 
 # end of mandatory metadata
@@ -11,8 +11,9 @@ version=1.0.1
 # Optional items:
 
 # Uncomment the following line and add your changelog entries:
-# changelog= wrong bug tracker in metadata fixed (https://github.com/gmassei/SSAM/issues)
-			 corrected bug in rules buildin when active layer and base layer where in different directori
+# changelog=changed color in bar charts
+			wrong bug tracker in metadata fixed (https://github.com/gmassei/SSAM/issues)
+			corrected bug in rules buildin when active layer and base layer where in different directory
 
 # tags are comma separated with spaces allowed
 tags=Sustainability, Geographic MCDA, Vector
