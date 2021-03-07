@@ -96,9 +96,9 @@ class SSAMAnlisys(QWidget):
             self.valueLbl=QLabel()
             self.layoutSust.addWidget(self.valueLbl,i,2)
             i+=1
-        self.sustainability=Sustainability(self.activeLayer,self.parameterList,self.sliders)
+        
         self.overAllBtn=QPushButton('Overall assesment')
-        self.overAllBtn.clicked.connect(self.sustainability.overallValue)
+        self.overAllBtn.clicked.connect(self.runSustainability)
         self.layoutSust.addWidget(self.overAllBtn,i,0,1,2)
         self.groupBoxSustainability.setLayout(self.layoutSust)
         self.layout.addWidget(self.groupBoxSustainability,1,0,1,2)
@@ -109,8 +109,9 @@ class SSAMAnlisys(QWidget):
         self.RulesListWidget=QListWidget()
         self.extractRulesBtn=QPushButton('Extract rules')
         self.layoutRules.addWidget(self.extractRulesBtn,0,0,1,2)
-        
         self.extractRulesBtn.clicked.connect(self.showRules)
+        self.extractRulesBtn.setEnabled(False)
+        
         self.layoutRules.addWidget(self.RulesListWidget,1,0,1,2)
         self.groupRules.setLayout(self.layoutRules) 
         self.layout.addWidget(self.groupRules,2,0,1,2)
@@ -142,6 +143,11 @@ class SSAMAnlisys(QWidget):
     def showMap(self):
         cMAP=ChoroplethMAP(self.activeLayer,self.parameterList)
         cMAP.renderLayer()
+        
+    def runSustainability(self):
+        self.sustainability=Sustainability(self.activeLayer,self.parameterList,self.sliders)
+        self.sustainability.overallValue()
+        self.extractRulesBtn.setEnabled(True)
         
         
     def showRules(self):
