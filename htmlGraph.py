@@ -1,21 +1,14 @@
 import os
 import operator
 
-def BuilHTMLGraph(suist,env,eco,soc,labels):
-	header=["label","economic","social","environmental","sustainability"]
-	data=[]
-	for i in range(len(labels)):
-		row=[]
-		row.append(labels[i])
-		row.append(eco[i])
-		row.append(soc[i])
-		row.append(env[i])
-		row.append(suist[i])
-		data.append(row)
-	currentDIR = unicode(os.path.abspath( os.path.dirname(__file__)))
-	data = sorted(data, key=operator.itemgetter(-1),reverse=True)
-	log=open(os.path.join(currentDIR,"log.html"),"w")
-	log.write(currentDIR)
+
+def chartData(field):
+    pass
+
+def BuilHTMLGraph(data,dimension):
+
+	currentDIR = os.path.abspath( os.path.dirname(__file__))
+
 	HTMLfile=open(os.path.join(currentDIR,"barGraph.html"),"w")
 
 	HTMLfile.write("""<!DOCTYPE html>
@@ -33,11 +26,12 @@ def BuilHTMLGraph(suist,env,eco,soc,labels):
 			google.setOnLoadCallback(drawChart);
 			function drawChart() {
 				var dataBar = google.visualization.arrayToDataTable([\n""")
-	HTMLfile.write(str(header[:-1])+",\n")
-	for r in range(len(data[:-1])):
-		HTMLfile.write(str(data[r][:-1])+",\n") #last doesn't printed
-	HTMLfile.write(str(data[r+1][:-1]))
+                                                         
+	HTMLfile.write(str(dimension)+",\n")
+	for r in range(len(data)):
+		HTMLfile.write(str(data[r])+",\n") #last doesn't printed
 	HTMLfile.write("\n]);\n")
+    
 	HTMLfile.write("""	var optionsBarStack = {
 			title: 'bars of sustainability',
 			isStacked: 'true',
@@ -78,4 +72,3 @@ def BuilHTMLGraph(suist,env,eco,soc,labels):
 	  </body>
 	</html>""")
 	HTMLfile.close()
-	log.close()

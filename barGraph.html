@@ -13,41 +13,21 @@
 			google.setOnLoadCallback(drawChart);
 			function drawChart() {
 				var dataBar = google.visualization.arrayToDataTable([
-['label', 'economic', 'social', 'environmental'],
-['SWEDEN', 0.4967, 0.6643, 0.329],
-['DENMARK', 0.5053, 0.6184, 0.2364],
-['FRANCE', 0.5257, 0.2647, 0.6028],
-['GERMANY', 0.5696, 0.1232, 0.7775],
-['SPAIN', 0.412, 0.3854, 0.4874],
-['AUSTRIA', 0.4923, 0.3774, 0.3523],
-['ITALY', 0.412, 0.278, 0.5992],
-['UNITED KINGDOM', 0.3994, 0.2914, 0.5423],
-['PORTUGAL', 0.4638, 0.3978, 0.2641],
-['FINLAND', 0.5648, 0.3128, 0.1925],
-['NETHERLANDS', 0.3572, 0.3429, 0.2238],
-['HUNGARY', 0.5888, 0.1912, 0.1177],
-['MALTA', 0.1983, 0.4713, 0.113],
-['POLAND', 0.4651, 0.1381, 0.3511],
-['BELGIUM', 0.4755, 0.2242, 0.1748],
-['IRELAND', 0.4525, 0.232, 0.1621],
-['SLOVENIA', 0.5279, 0.1785, 0.1585],
-['ROMANIA', 0.5127, 0.1302, 0.2588],
-['LATVIA', 0.4942, 0.1531, 0.2209],
-['BULGARIA', 0.5507, 0.1474, 0.1345],
-['GREECE', 0.3962, 0.2411, 0.1548],
-['ESTONIA', 0.5747, 0.1532, 0.0795],
-['LITHUANIA', 0.4091, 0.2559, 0.0842],
-['CZECH REPUBLIC', 0.4549, 0.1919, 0.1346],
-['SLOVAKIA', 0.4562, 0.1431, 0.1481],
-['CYPRUS', 0.2154, 0.2416, 0.1192],
-['LUXEMBOURG', 0.2519, 0.1941, 0.1192]
+['Label', 'Environmental'],
+['Toscana', 0.6375497832681934],
+['Umbria', 0.4364274833741053],
+['Marche', 0.5673162627824734],
+['Lazio', 0.17702102677158588],
+
 ]);
 	var optionsBarStack = {
 			title: 'bars of sustainability',
 			isStacked: 'true',
 			legend:{position:'in'},
+            colors: ['#ff3300', '#33bbe5','#337719'],
 			};	var optionsBarHor = {
 			legend:{position:'in'},
+            colors: ['#ff3300', '#33bbe5','#337719'],
 			};	var optionsBubble = {
 			title: 'environment',
 			colorAxis: {colors: ['red', 'green']},

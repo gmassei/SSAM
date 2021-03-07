@@ -8,6 +8,6 @@ http://www.gnu.org/copyleft/gpl.html
 # for rebuild GUI:
 
 rm *.pyc
-pyuic4 -o ui_geoSUIT.py geoSUIT.ui
-pyrcc4 -o resources.py resources.qrc
+pyuic5 -o ui_geoSUST.py geoSUST.ui
+pyrcc5 -o resources.py resources.qrc
 

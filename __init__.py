@@ -22,5 +22,5 @@ email                : g_massa@libero.it
 
 
 def classFactory(iface):	# inizializza il plugin
-	from .geoSustainability import geoSustainability	# importiamo la classe che realizza il plugin
-	return geoSustainability(iface)	# creiamo una istanza del plugin
+	from .SSAM import SSAM	# importiamo la classe che realizza il plugin
+	return SSAM(iface)	# creiamo una istanza del plugin
