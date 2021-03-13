@@ -43,7 +43,6 @@ import pickle
 from .TOPSIS import *
 from . import DOMLEM
 from . import htmlGraph
-from .cartogram import *
 from .analysis import *
 
 #from .ui_geoSUST import Ui_Dialog
@@ -269,9 +268,9 @@ class EvalTable(QWidget):
         self.buttonLayout = QVBoxLayout()
         self.mainLayout.addLayout(self.buttonLayout)
         # add a top "margin"
-        self.buttonLayout.addStretch(1)
-        self.pageBtn = QPushButton('Set')
-        self.buttonLayout.addWidget(self.pageBtn)
+        #self.buttonLayout.addStretch(1)
+        #self.pageBtn = QPushButton('Set')
+        #self.buttonLayout.addWidget(self.pageBtn)
         #self.pageBtn.clicked.connect(self.popolateTable())
         # add a bottom "margin"
         self.buttonLayout.addStretch(1)
@@ -357,6 +356,7 @@ class Processor(QWidget):
     def process(self):
         provider = self.activeLayer.dataProvider()
         if provider.fieldNameIndex(self.parameters['dimension'])==-1:
+            print(provider.fieldNameIndex(self.parameters['dimension']))
             self.activeLayer.dataProvider().addAttributes([QgsField(self.parameters['dimension'], QVariant.Double,"",24,4,"")] )
             #edit is a shortcut that replaces layer.beginEditCommand and layer.endEditCommand
         with edit(self.activeLayer):

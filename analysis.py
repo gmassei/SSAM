@@ -69,7 +69,7 @@ class SSAMAnlisys(QWidget):
         self.cmBoxField.addItems(self.listField)
         self.layoutCharts.addWidget(self.cmBoxField,0,1)
         self.chartsBtn = QPushButton('Charts')
-        self.chartsBtn.clicked.connect(self.buildCharts)
+        self.chartsBtn.clicked.connect(self.dimensionCharts)
         self.layoutCharts.addWidget(self.chartsBtn,0,2)
         self.groupBoxCharts.setLayout(self.layoutCharts)
         self.layout.addWidget(self.groupBoxCharts,0,0,1,2)
@@ -121,7 +121,7 @@ class SSAMAnlisys(QWidget):
         value = str(self.slider.value())
         self.valueLbl.setText(value)
     
-    def buildCharts(self):
+    def buildDataForCharts(self):
         labeField=self.cmBoxField.currentText()
         idxLabel=self.activeLayer.fields().indexFromName(labeField)
         labels=[f.attributes()[idxLabel] for f in self.activeLayer.getFeatures()]
@@ -135,7 +135,11 @@ class SSAMAnlisys(QWidget):
             data.append(atts)
         dimension=['Label']+[parameters['dimension'] for parameters in self.parameterList]
         result = [[data[j][i] for j in range(len(data))] for i in range(len(data[0]))]
-        htmlGraph.BuilHTMLGraph(result,dimension)
+        return dimension,result
+        
+    def dimensionCharts(self):
+        dimension,result=self.buildDataForCharts()
+        htmlGraph.HTMLCharts(result,dimension)
         pluginDir = os.path.abspath( os.path.dirname(__file__))
         webbrowser.open(os.path.join(pluginDir,"barGraph.html"))
         
@@ -148,6 +152,8 @@ class SSAMAnlisys(QWidget):
         self.sustainability=Sustainability(self.activeLayer,self.parameterList,self.sliders)
         self.sustainability.overallValue()
         self.extractRulesBtn.setEnabled(True)
+        #dimension,result=self.buildDataForCharts()
+        #htmlGraph.plotlyCharts(result,dimension)
         
         
     def showRules(self):
@@ -239,6 +245,7 @@ class Sustainability:
         sMAP.symbolize('Sustainability')
         self.rules=RSDB(self.activeLayer,self.parameterList)
         self.rules.extractRules()
+
 
 class RSDB:
     def __init__(self,activeLayer,parameterList):

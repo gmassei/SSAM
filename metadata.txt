@@ -11,8 +11,8 @@ version=1.99.0
 # Optional items:
 
 # Uncomment the following line and add your changelog entries:
-# changelog=new project and rebuilded code for more flexibility use
-            changed color in bar charts
+# changelog=new project and code, more flexible use
+			changed color in bar charts
 			wrong bug tracker in metadata fixed (https://github.com/gmassei/SSAM/issues)
 			corrected bug in rules buildin when active layer and base layer where in different directory
 
@@ -25,7 +25,7 @@ tracker=https://github.com/gmassei/SSAM/issues
 repository=https://github.com/gmassei/SSAM
 icon=icon.png
 # experimental flag
-experimental=False
+experimental=True
 
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
@@ -35,4 +35,4 @@ category=Vector
 
 # Author contact information
 author=ARPA Umbria - University of Perugia (Developer: Gianluca Massei)
-email=g_massa@libero.it
+email=geonomica@gmail.com
