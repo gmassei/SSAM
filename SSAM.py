@@ -24,7 +24,7 @@ email           : (developper) Gianluca Massei (geonomica@gmail.com)
 from __future__ import absolute_import
 from builtins import object
 
-from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication
+from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication,Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QMessageBox, QMenu, QAction
 from qgis.core import QgsMapLayer
@@ -40,32 +40,35 @@ import numpy as np
 
 
 class SSAM:
-	def __init__(self, iface):
-		self.iface = iface	# salviamo il riferimento all'interfaccia di QGis
+    def __init__(self, iface):
+        self.iface = iface    # salviamo il riferimento all'interfaccia di QGis
 
-	def initGui(self):	# aggiunge alla GUI di QGis i pulsanti per richiamare il plugin
-		# creiamo l'azione che lancerà il plugin
-		self.actionSUST = QAction(QIcon(":/plugins/ssam/icon.png"), "SSAM (Spatial Sustainability Assessment Model)", self.iface.mainWindow())
-		self.actionSUST.triggered.connect(self.runSSAM)
-		self.iface.addToolBarIcon(self.actionSUST)
-		self.iface.addPluginToMenu( "&SSAM ",self.actionSUST )
+    def initGui(self):
+        self.actionSUST = QAction(QIcon(":/plugins/ssam/icon.png"), "SSAM II (Spatial Sustainability Assessment Model)", self.iface.mainWindow())
+        self.actionSUST.triggered.connect(self.runSSAM)
+        self.iface.addToolBarIcon(self.actionSUST)
+        self.iface.addPluginToMenu( "&SSAM II",self.actionSUST )
 
-	def unload(self):	# rimuove dalla GUI i pulsanti aggiunti dal plugin
-		self.iface.removePluginMenu( "&SSAM",self.actionSUST)
-		self.iface.removeToolBarIcon(self.actionSUST)
-		
-	def runSSAM(self):	# richiamato al click sull'azione
-		#from .geoSUIT import geoSUITDialog
-		from .guiSSAM import guiSSAMDialog
-		self.active_layer = self.iface.activeLayer()
-		self.base_layer = self.iface.activeLayer()
-		if ((self.active_layer == None) or (self.active_layer.type() != QgsMapLayer.VectorLayer)):
-			result=QMessageBox.warning(self.iface.mainWindow(), "SSAM",
-			("No active layer found\n" "Please make active one or more vector layer\n" \
+    def unload(self):
+        self.iface.removePluginMenu( "&SSAM II",self.actionSUST)
+        self.iface.removeToolBarIcon(self.actionSUST)
+        
+    def runSSAM(self):
+        from .guiSSAM import guiSSAMDialog
+        self.active_layer = self.iface.activeLayer()
+        self.base_layer = self.iface.activeLayer()
+        if ((self.active_layer == None) or (self.active_layer.type() != QgsMapLayer.VectorLayer)):
+            result=QMessageBox.warning(self.iface.mainWindow(), "SSAM",
+            ("No active layer found\n" "Please make active one or more vector layer\n" \
             "Do you need documents or data ?"), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-			if result  == QMessageBox.Yes:
-				webbrowser.open("http://maplab.alwaysdata.net/SSAM.html")
-		else:
-			dlg = guiSSAMDialog(self.iface)
-			dlg.exec_()
+            if result  == QMessageBox.Yes:
+                webbrowser.open("http://maplab.alwaysdata.net/SSAM.html")
+        else:
+            dlg = guiSSAMDialog(self.iface)
+            flags = Qt.Window | Qt.WindowSystemMenuHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint
+            dlg.setWindowFlags(flags)
+            dlg.setWindowModality(Qt.NonModal)
+            #dlg.setModal(False)
+            dlg.show()
+            dlg.exec_()
 

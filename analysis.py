@@ -45,6 +45,7 @@ from . import htmlGraph
 
 
 class SSAMAnlisys(QWidget):
+    """ Implement all Analysis option """
     def __init__(self,activeLayer,parameterList):
         #QWidget.__init__(self)
         super().__init__()
@@ -56,6 +57,7 @@ class SSAMAnlisys(QWidget):
         self.showMap()
         
     def initUI(self):
+        """ set gui widget """
         self.setGeometry(300, 300, 300, 200)
         #self.groupBox = QGroupBox("Sustainability charts")
         self.layout = QGridLayout()
@@ -152,7 +154,7 @@ class SSAMAnlisys(QWidget):
         self.sustainability=Sustainability(self.activeLayer,self.parameterList,self.sliders)
         self.sustainability.overallValue()
         self.extractRulesBtn.setEnabled(True)
-        #dimension,result=self.buildDataForCharts()
+        dimension,result=self.buildDataForCharts()
         #htmlGraph.plotlyCharts(result,dimension)
         
         

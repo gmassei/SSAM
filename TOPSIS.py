@@ -69,12 +69,6 @@ class TOPSIS:
         self.stepFive()
         print('closeness:',self.relativeCloseness)
         
-
-
-
-
-	
-
 def main():
 	print("topsis mcda model")
 	return 0

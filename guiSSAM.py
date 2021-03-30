@@ -51,7 +51,7 @@ from .analysis import *
 class guiSSAMDialog(QDialog):
     """Main gui control"""
     def __init__(self,iface):
-        #super().__init__()
+        title="SSAM (Spatial Sustainability Assessment Model)"
         QDialog.__init__(self, iface.mainWindow())
         self.iface = iface
         self.activeLayer = self.iface.activeLayer()
@@ -60,12 +60,16 @@ class guiSSAMDialog(QDialog):
         self.setLayout(self.layout)
         self.initUi()
         self.resize(650, 400)
+        self.setWindowTitle(title)
+        self.setWindowModality(Qt.ApplicationModal)
         # Add toolbar and items
         self.evalTableList=[] #list of evalTables added on pages
 
 
+
         
     def initUi(self):
+        """Inizialize SSAM dialog """
         pluginDir = os.path.abspath( os.path.dirname(__file__))
         self.pages=QTabWidget()
         
@@ -125,6 +129,7 @@ class guiSSAMDialog(QDialog):
         
 
     def popMenu(self):
+        """Build pop menu """
         menu = QMenu()
         addAction = menu.addAction("Add new dimension")
         removeAction = menu.addAction("Remove current dimension")
@@ -142,14 +147,15 @@ class guiSSAMDialog(QDialog):
             
             
     def debug(self):
+        """Funcion only for debug, eventually added in popmenu """
         for i in range(self.pages.count()):
             if self.pages.tabText(i) == "Analysis":
                 print("---------->")
             
-
-        
         
     def addPage(self):
+        """Add a page to self.pages (QTabWidget()) and insert EvalTable object in each one;
+        append new EvalTable object in evalTableList """
         selectedItems = self.getField.listAllFields.selectedItems()
         fieldList=[item.text() for item in selectedItems]
         [self.getField.listAllFields.takeItem(self.getField.listAllFields.row(item)) for item in selectedItems]
@@ -172,6 +178,8 @@ class guiSSAMDialog(QDialog):
             
         
     def removePage(self):
+        """Remove selected page to self.pages (QTabWidget()) and the 
+        EvalTable from object in evalTableList """
         idTab=self.pages.currentIndex()
         name=self.pages.currentWidget().objectName()
         print(id,name,self.evalTableList)
@@ -184,10 +192,14 @@ class guiSSAMDialog(QDialog):
             [self.evalTableList.remove(o) for o in self.evalTableList if o.objectName()==name]
             
     def reload(self):
+        """Reload all field in setting page"""
         self.getField.listAllFields.clear()
         self.getField.listAllFields.addItems(self.allFields)
         
+        
     def retrieveParameters(self):
+        """For each page/dimension retrieve all parameters and build [parametersList]
+        as a list of {parameters} dictionary"""
         self.parameterList=[]
         dimensions=[w.objectName() for w in self.evalTableList ] #retrieve table name for each dimension page
         for i in range(len(self.evalTableList)):
@@ -201,7 +213,9 @@ class guiSSAMDialog(QDialog):
                 parameters={'dimension':dimension,'criteria':criteria,'weigths':weigths,'preference':preference,'idealPoint':idealPoint,'worstPoint':worstPoint}
                 self.parameterList.append(parameters)
                 
+                
     def addAnalisysPage(self):
+        """Add Analysis page """
         analysis=SSAMAnlisys(self.activeLayer,self.parameterList)
         
         for i in range(self.pages.count()):
@@ -216,6 +230,7 @@ class guiSSAMDialog(QDialog):
             
     
     def run(self):
+        """Run TOPSIS models """
         self.retrieveParameters()
         for parameters in self.parameterList:
             topsis=TOPSIS(self.activeLayer, parameters)
@@ -224,7 +239,7 @@ class guiSSAMDialog(QDialog):
             print(topsis.relativeCloseness)
         self.addAnalisysPage()
         #name = self.findChild(self.pages, "Analysis")
-        print('done!!')
+
 
 
         
@@ -248,7 +263,7 @@ class CollectField(QWidget):
         self.selectedField.addItems([item.text() for item in selectedItems])
 
     def deselectFields(self):
-        "remove criteria fields from selected list"
+        "Remove criteria fields from selected list"
         selectedItems = self.selectedField.selectedItems()
         [self.selectedField.takeItem(self.selectedField.row(item)) for item in selectedItems]
         self.listAllFields.addItems([item.text() for item in selectedItems])
@@ -256,7 +271,7 @@ class CollectField(QWidget):
         
 
 class EvalTable(QWidget):
-    """Build evaluation table for each dimension"""
+    """Build evaluation table for each page/dimension"""
     def __init__(self,selectedField,activeLayer):
         QWidget.__init__(self)
         self.selectedField=selectedField
@@ -283,6 +298,7 @@ class EvalTable(QWidget):
         self.setTable()
 
     def setTable(self):    
+        """Set table for new page with default values """
         setLabel=["Label","Weigths","Preference","Ideal point", "Worst point "]
         self.tableWidget = QTableWidget()
         self.tableLayout.addWidget(self.tableWidget)
@@ -302,8 +318,10 @@ class EvalTable(QWidget):
         # add a margin to the right
         self.mainLayout.addStretch(1)
         self.tableWidget.cellClicked[(int,int)].connect(self.changeValue)
+
         
     def getTable(self):
+        """retrieve values from table - NOT YET USED """
         self.criteria=[self.tableWidget.horizontalHeaderItem(f).text() for f in range(self.tableWidget.columnCount())]
         self.weigths=[str(self.tableWidget.item(1, c).text()) for c in range(self.tableWidget.columnCount())]
         self.preference=[str(self.tableWidget.item(2, c).text()) for c in range(self.tableWidget.columnCount())]
@@ -313,9 +331,31 @@ class EvalTable(QWidget):
         feat = self.activeLayer.getFeatures()
         att=[[f.attributes()[i] for i in idxs ] for f in feat]
         
-   
+    def saveSetting2csv(self):
+        """save values in setting.csf file - NOT YET USED"""
+        currentDIR = (os.path.dirname(str(self.base_layer.source())))
+        setting=(os.path.join(currentDIR,"setting.csv"))
+        fileCfg = open(os.path.join(currentDIR,"setting.csv"),"w")
+        label=[(self.tableWidget.item(0, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())]
+        for l in label:
+            fileCfg.write(str(l)+";")
+        fileCfg.write("\n")
+        for c in self.criteria:
+            fileCfg.write(str(c)+";")
+        fileCfg.write("\n")
+        fileCfg.write(";".join(self.weigth))
+        fileCfg.write("\n")
+        for p in self.preference:
+            fileCfg.write(str(p)+";")
+        fileCfg.write("\n")
+        fileCfg.write(";".join(self.idealPoint))
+        fileCfg.write("\n")
+        fileCfg.write(";".join(self.worstPoint))
+        fileCfg.close()
+        
         
     def changeValue(self):
+        """Function for clicked signal change values """
         cell=self.tableWidget.currentItem()
         r=cell.row()
         c=cell.column()
@@ -346,14 +386,15 @@ class Processor(QWidget):
         self.layout.addWidget(self.lblNum,0,0)
         #self.getCriteriaValue()
         self.process()
-
         
     def sumCriteria(criteria):
+        """ Sum up all criteria values NOT YET USED"""
         feat = aLayer.getFeatures()
         criteriaValues=[f[criteria] for f in feat]
         return sum(criteriaValues)
             
     def process(self):
+        """ Elaborate """
         provider = self.activeLayer.dataProvider()
         if provider.fieldNameIndex(self.parameters['dimension'])==-1:
             print(provider.fieldNameIndex(self.parameters['dimension']))

@@ -1,12 +1,4 @@
-import os
-import operator
-
-    
-def HTMLCharts(data,dimension):
-    """ write chart file in html code """
-    currentDIR = os.path.abspath( os.path.dirname(__file__))
-    HTMLfile=open(os.path.join(currentDIR,"barGraph.html"),"w")
-    HTMLfile.write("""<!DOCTYPE html>
+<!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,32 +12,45 @@ def HTMLCharts(data,dimension):
             google.load("visualization", "1", {packages:["corechart"]});
             google.setOnLoadCallback(drawChart);
             function drawChart() {
-                var dataBar = google.visualization.arrayToDataTable([\n""")
-                                                         
-    HTMLfile.write(str(dimension)+",\n")
-    for r in range(len(data)):
-        HTMLfile.write(str(data[r])+",\n") #last doesn't printed
-    HTMLfile.write("\n]);\n")
-    
-    HTMLfile.write("""    var optionsBarStack = {
+                var dataBar = google.visualization.arrayToDataTable([
+['Label', 'Environmental', 'Economic', 'Social'],
+['Piemonte', 0.35531618672052573, 0.3983408920963227, 0.39169396249090416],
+["Valle D'Aosta", 0.5068844604431775, 0.1748937450452024, 0.505266171783086],
+['Lombardia', 0.47863161052490866, 0.6763692145055671, 0.2998239081879679],
+['Trentino Alto Adige', 0.4863342211594351, 0.24080402635314915, 0.4831409672921117],
+['Veneto', 0.4984898082380694, 0.3634073198424729, 0.29112759743812844],
+['Friuli Venezia Giulia', 0.4471844242947154, 0.28601416997932266, 0.45654723205702286],
+['Liguria', 0.2980619641668963, 0.2324633767163358, 0.3702941322387643],
+['Emilia Romagna', 0.36999727094842744, 0.3858569814046603, 0.43162269136168013],
+['Toscana', 0.3491504764065182, 0.2778200512218399, 0.3649981172033747],
+['Umbria', 0.444106730082765, 0.17758153303777013, 0.29595345161775943],
+['Marche', 0.3158618660658277, 0.1592503522805588, 0.33860450855053176],
+['Lazio', 0.24681467244719957, 0.4821512664847306, 0.4272540203407693],
+['Abruzzo', 0.30825115409529225, 0.2172111818085579, 0.23588091492778981],
+['Molise', 0.42948553331653316, 0.20079205752701462, 0.36444653139050665],
+['Campania', 0.30596756764609384, 0.3439862955500722, 0.5142354265627335],
+['Puglia', 0.39831241174259424, 0.2971218252656907, 0.48349104083343386],
+['Basilicata', 0.30878027771101696, 0.25234723019765104, 0.35562357673646583],
+['Calabria', 0.2060253867942755, 0.27203771310769154, 0.5142813748388251],
+['Sicilia', 0.2546662276589308, 0.34453595516330393, 0.5190846108827878],
+['Sardegna', 0.3892020182221349, 0.23993771240778694, 0.6350052914546512],
+
+]);
+    var optionsBarStack = {
             title: 'bars of sustainability',
             isStacked: 'true',
             legend:{position:'in'},
             colors: ['#ff3300', '#33bbe5','#337719'],
-            };""")
-    HTMLfile.write("\n")
-    HTMLfile.write("""	var optionsBarHor = {
+            };
+	var optionsBarHor = {
             legend:{position:'in'},
             colors: ['#ff3300', '#33bbe5','#337719'],
-            };""")
-    HTMLfile.write("\n")
-    print(len(dimension[1:]),dimension)
-    if (len(dimension[1:])==3):
-        HTMLfile.write("""    var optionsBubble = {
-                title:'%s',
+            };
+    var optionsBubble = {
+                title:'Social',
                 colorAxis: {colors: ['red', 'green']},
-                hAxis: {title: '%s'},
-                vAxis: {title: '%s'},
+                hAxis: {title: 'Environmental'},
+                vAxis: {title: 'Economic'},
                 };
                 var chartBar = new google.visualization.ColumnChart(document.getElementById('barS_div'));
                 chartBar.draw(dataBar, optionsBarStack);
@@ -54,9 +59,7 @@ def HTMLCharts(data,dimension):
                 var chartBubble = new google.visualization.BubbleChart(document.getElementById('bubble_div'));
                 chartBubble.draw(dataBar, optionsBubble)
               }
-            </script>""" % (str(dimension[3]),str(dimension[1]),str(dimension[2])))
-            
-    HTMLfile.write("""
+            </script>
       </head>
       <body>
       <div id="logo" class="container"><h1>Charts of sustainability</h1>
@@ -69,7 +72,4 @@ def HTMLCharts(data,dimension):
         <br><hr>
         <hr>
       </body>
-    </html>""")
-    HTMLfile.close()
-    
-    
+    </html>
