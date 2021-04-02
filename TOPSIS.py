@@ -36,12 +36,12 @@ class TOPSIS:
         self.step1Mtx=[[(x/y) for x,y in zip(row,self.sumSqrtMat)] for row in atts]
         
     def stepTwo(self):
-        weigths=self.parameters['weigths']
-        self.step2Mtx=[[(x*w) for x,w in zip(row,weigths)] for row in self.step1Mtx]
+        weights=self.parameters['weights']
+        self.step2Mtx=[[(x*w) for x,w in zip(row,weights)] for row in self.step1Mtx]
         
     def stepThree(self):
-        self.ideal=[x/s*w for x,s,w in zip(self.parameters['idealPoint'],self.sumSqrtMat,self.parameters['weigths'])]
-        self.worst=[x/s*w for x,s,w in zip(self.parameters['worstPoint'],self.sumSqrtMat,self.parameters['weigths'])]
+        self.ideal=[x/s*w for x,s,w in zip(self.parameters['idealPoint'],self.sumSqrtMat,self.parameters['weights'])]
+        self.worst=[x/s*w for x,s,w in zip(self.parameters['worstPoint'],self.sumSqrtMat,self.parameters['weights'])]
         
     def stepFour(self):
         idealMat=[[(x-ip)**2 for x,ip in zip(row,self.ideal)] for row in self.step2Mtx]

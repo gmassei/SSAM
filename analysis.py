@@ -295,12 +295,12 @@ class RSDB:
     def usedCriteria(self):
         #criteria=[parameters['criteria'] for parameters in self.parameterList]
         criteria = list(chain.from_iterable([parameters['criteria'] for parameters in self.parameterList])) 
-        weigths= list(chain.from_iterable([parameters['weigths'] for parameters in self.parameterList]))
+        weights= list(chain.from_iterable([parameters['weights'] for parameters in self.parameterList]))
         preference= list(chain.from_iterable([parameters['preference'] for parameters in self.parameterList]))
         idealPoint= list(chain.from_iterable([parameters['idealPoint'] for parameters in self.parameterList]))
         worstPoint= list(chain.from_iterable([parameters['worstPoint'] for parameters in self.parameterList]))
-        print(criteria,weigths)
-        return criteria, preference,weigths,idealPoint,worstPoint
+        print(criteria,weights)
+        return criteria, preference,weights,idealPoint,worstPoint
         
     def writeISFfile(self,decision):
         #currentDIR = (os.path.dirname(str(self.base_layer.source())))

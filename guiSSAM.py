@@ -37,7 +37,7 @@ import os
 import sys
 import webbrowser
 import shutil
-import csv
+import json
 import pickle
 
 from .TOPSIS import *
@@ -64,8 +64,6 @@ class guiSSAMDialog(QDialog):
         self.setWindowModality(Qt.ApplicationModal)
         # Add toolbar and items
         self.evalTableList=[] #list of evalTables added on pages
-
-
 
         
     def initUi(self):
@@ -128,31 +126,28 @@ class guiSSAMDialog(QDialog):
         self.pages.customContextMenuRequested.connect(self.popMenu)
         
 
+        
+
     def popMenu(self):
         """Build pop menu """
         menu = QMenu()
         addAction = menu.addAction("Add new dimension")
         removeAction = menu.addAction("Remove current dimension")
+        jsonAction=menu.addAction("Load data from JSON")
         runAction = menu.addAction("Process")
-        #debug=menu.addAction("Debug")
         action = menu.exec_(self.mapToGlobal(QPoint(100,100)))
-        if action == removeAction:
-            self.removePage()
-        elif action==addAction:
+        if action==addAction:
             self.addPage()
+        elif action == removeAction:
+            self.removePage()
+        elif action==jsonAction:
+            self.addPagesFromJSON()
         elif action==runAction:
             self.run()
-        # elif action==debug:
-        #     self.debug()
+
             
             
-    def debug(self):
-        """Funcion only for debug, eventually added in popmenu """
-        for i in range(self.pages.count()):
-            if self.pages.tabText(i) == "Analysis":
-                print("---------->")
             
-        
     def addPage(self):
         """Add a page to self.pages (QTabWidget()) and insert EvalTable object in each one;
         append new EvalTable object in evalTableList """
@@ -175,8 +170,28 @@ class guiSSAMDialog(QDialog):
             allItems.remove(pageName)
             self.pageNameCbBx.clear()
             self.pageNameCbBx.addItems(allItems)
+
+    def addPagesFromJSON(self):
+        """Retrieve parameter from JSON file and setting pages and parameters"""
+        currentDIR = (os.path.dirname(str(self.activeLayer.source())))
+        parameterFile=(os.path.join(currentDIR,"parameteres.jsonl"))
+        if os.path.exists(parameterFile):
+            parameterList=[]
+            with open(parameterFile, "r",encoding='utf-8') as fp:
+                for l in fp:
+                    parameterList.append(json.loads(l.rstrip('\n|\r')))
+            for parameter in parameterList:
+                self.eTable=EvalTable(parameter['criteria'],self.activeLayer)#new table object
+                idTab=self.pages.addTab(self.eTable, parameter['dimension'])
+                self.pages.setCurrentIndex(idTab)
+                self.pages.currentWidget().setObjectName(parameter['dimension'])
+                self.eTable.updateTable(parameter['criteria'],parameter['weights'],
+                                        parameter['preference'],parameter['idealPoint'],
+                                        parameter['worstPoint'])
+                self.evalTableList.append(self.eTable)
+            self.parameterList=parameterList
             
-        
+
     def removePage(self):
         """Remove selected page to self.pages (QTabWidget()) and the 
         EvalTable from object in evalTableList """
@@ -206,18 +221,17 @@ class guiSSAMDialog(QDialog):
             dimension=dimensions[i] 
             if "Analysis" != dimension:
                 criteria=[self.evalTableList[i].tableWidget.horizontalHeaderItem(f).text() for f in range(self.evalTableList[i].tableWidget.columnCount())]
-                weigths=[float(self.evalTableList[i].tableWidget.item(1, c).text()) for c in range(self.evalTableList[i].tableWidget.columnCount())]
-                preference=[self.evalTableList[i].tableWidget.item(2, c).text() for c in range(self.evalTableList[i].tableWidget.columnCount())]
-                idealPoint=[float(self.evalTableList[i].tableWidget.item(3, c).text()) for c in range(self.evalTableList[i].tableWidget.columnCount())]
-                worstPoint=[float(self.evalTableList[i].tableWidget.item(4, c).text()) for c in range(self.evalTableList[i].tableWidget.columnCount())]
-                parameters={'dimension':dimension,'criteria':criteria,'weigths':weigths,'preference':preference,'idealPoint':idealPoint,'worstPoint':worstPoint}
+                weights=[float(self.evalTableList[i].tableWidget.item(0, c).text()) for c in range(self.evalTableList[i].tableWidget.columnCount())]
+                preference=[self.evalTableList[i].tableWidget.item(1, c).text() for c in range(self.evalTableList[i].tableWidget.columnCount())]
+                idealPoint=[float(self.evalTableList[i].tableWidget.item(2, c).text()) for c in range(self.evalTableList[i].tableWidget.columnCount())]
+                worstPoint=[float(self.evalTableList[i].tableWidget.item(3, c).text()) for c in range(self.evalTableList[i].tableWidget.columnCount())]
+                parameters={'dimension':dimension,'criteria':criteria,'weights':weights,'preference':preference,'idealPoint':idealPoint,'worstPoint':worstPoint}
                 self.parameterList.append(parameters)
                 
                 
     def addAnalisysPage(self):
         """Add Analysis page """
         analysis=SSAMAnlisys(self.activeLayer,self.parameterList)
-        
         for i in range(self.pages.count()):
             if self.pages.tabText(i) == "Analysis":
                 page = self.pages.findChild(QWidget, "Analysis")
@@ -228,6 +242,17 @@ class guiSSAMDialog(QDialog):
         self.pages.setCurrentIndex(index)
         self.pages.currentWidget().setObjectName("Analysis")
             
+
+    def parameterToJSON(self):
+        """Save parameter dictionary to JSON file"""
+        currentDIR = (os.path.dirname(str(self.activeLayer.source())))
+        parameterFile=(os.path.join(currentDIR,"parameteres.jsonl"))
+        with open(parameterFile, 'w',encoding='utf-8') as fp:
+            for parameterDict in self.parameterList:
+                parameterLine=json.dumps(parameterDict,  ensure_ascii=False)
+                fp.write(parameterLine+'\n')
+                
+
     
     def run(self):
         """Run TOPSIS models """
@@ -238,14 +263,13 @@ class guiSSAMDialog(QDialog):
             self.process=Processor(self.pages.count(),self.activeLayer,parameters,topsis.relativeCloseness)
             print(topsis.relativeCloseness)
         self.addAnalisysPage()
+        self.parameterToJSON()
         #name = self.findChild(self.pages, "Analysis")
-
-
 
         
         
 class CollectField(QWidget):
-    """ List all fileds and select critaria in setting tab"""
+    """ List all fileds, select and manage critaria in setting tab"""
     def __init__(self,allFields):
         QWidget.__init__(self)
         self.layout = QGridLayout()
@@ -278,28 +302,23 @@ class EvalTable(QWidget):
         self.activeLayer=activeLayer
         self.central = QWidget(self)
         self.mainLayout = QVBoxLayout(self.central)
-        # add a left "margin"
+        # add a "margin"
         self.mainLayout.addStretch(1)
         self.buttonLayout = QVBoxLayout()
         self.mainLayout.addLayout(self.buttonLayout)
-        # add a top "margin"
-        #self.buttonLayout.addStretch(1)
-        #self.pageBtn = QPushButton('Set')
-        #self.buttonLayout.addWidget(self.pageBtn)
-        #self.pageBtn.clicked.connect(self.popolateTable())
-        # add a bottom "margin"
+        # add a "margin"
         self.buttonLayout.addStretch(1)
-        # add a "spacing" between the two vertical layouts
+        # add a "margin"
         self.mainLayout.addStretch(1)  
         self.tableLayout = QVBoxLayout()
         self.mainLayout.addLayout(self.tableLayout)
-        # add a top "margin" to the right layout
+        # add a top "margin"
         self.tableLayout.addStretch(1)
         self.setTable()
 
     def setTable(self):    
         """Set table for new page with default values """
-        setLabel=["Label","Weigths","Preference","Ideal point", "Worst point "]
+        setLabel=["weights","Preference","Ideal point", "Worst point "]
         self.tableWidget = QTableWidget()
         self.tableLayout.addWidget(self.tableWidget)
         self.tableWidget.setFixedSize(600, 180)
@@ -307,61 +326,34 @@ class EvalTable(QWidget):
         self.tableWidget.setHorizontalHeaderLabels(self.selectedField)
         self.tableWidget.setRowCount(len(setLabel))
         self.tableWidget.setVerticalHeaderLabels(setLabel)
-        for r in range(len(self.selectedField)):
+        for r in range(len(self.selectedField)): #TODO: remove duplicated code
             idx = self.activeLayer.fields().indexFromName(self.selectedField[r])
-            self.tableWidget.setItem(0,r,QTableWidgetItem("-"))
-            self.tableWidget.setItem(1,r,QTableWidgetItem("1.0"))
-            self.tableWidget.setItem(2,r,QTableWidgetItem("gain"))
-            self.tableWidget.setItem(3,r,QTableWidgetItem(str(self.activeLayer.maximumValue(idx))))
-            self.tableWidget.setItem(4,r,QTableWidgetItem(str(self.activeLayer.minimumValue(idx))))
+            self.tableWidget.setItem(0,r,QTableWidgetItem("1.0"))
+            self.tableWidget.setItem(1,r,QTableWidgetItem("gain"))
+            self.tableWidget.setItem(2,r,QTableWidgetItem(str(self.activeLayer.maximumValue(idx))))
+            self.tableWidget.setItem(3,r,QTableWidgetItem(str(self.activeLayer.minimumValue(idx))))
         self.tableLayout.addStretch(1)
         # add a margin to the right
         self.mainLayout.addStretch(1)
         self.tableWidget.cellClicked[(int,int)].connect(self.changeValue)
-
-        
-    def getTable(self):
-        """retrieve values from table - NOT YET USED """
-        self.criteria=[self.tableWidget.horizontalHeaderItem(f).text() for f in range(self.tableWidget.columnCount())]
-        self.weigths=[str(self.tableWidget.item(1, c).text()) for c in range(self.tableWidget.columnCount())]
-        self.preference=[str(self.tableWidget.item(2, c).text()) for c in range(self.tableWidget.columnCount())]
-        self.idealPoint=[str(self.tableWidget.item(3, c).text()) for c in range(self.tableWidget.columnCount())]
-        self.worstPoint=[str(self.tableWidget.item(4, c).text()) for c in range(self.tableWidget.columnCount())]
-        idxs = [self.activeLayer.fields().indexFromName(fName) for fName in  self.criteria]
-        feat = self.activeLayer.getFeatures()
-        att=[[f.attributes()[i] for i in idxs ] for f in feat]
-        
-    def saveSetting2csv(self):
-        """save values in setting.csf file - NOT YET USED"""
-        currentDIR = (os.path.dirname(str(self.base_layer.source())))
-        setting=(os.path.join(currentDIR,"setting.csv"))
-        fileCfg = open(os.path.join(currentDIR,"setting.csv"),"w")
-        label=[(self.tableWidget.item(0, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())]
-        for l in label:
-            fileCfg.write(str(l)+";")
-        fileCfg.write("\n")
-        for c in self.criteria:
-            fileCfg.write(str(c)+";")
-        fileCfg.write("\n")
-        fileCfg.write(";".join(self.weigth))
-        fileCfg.write("\n")
-        for p in self.preference:
-            fileCfg.write(str(p)+";")
-        fileCfg.write("\n")
-        fileCfg.write(";".join(self.idealPoint))
-        fileCfg.write("\n")
-        fileCfg.write(";".join(self.worstPoint))
-        fileCfg.close()
-        
+       
+    def updateTable(self,criteria,weights,preference,idealPoint,worstPoint):
+        """ update table in a paage from json values or by parameters input """
+        print(criteria,weights,preference,idealPoint,worstPoint)
+        for r in range(len(criteria)): #TODO: remove duplicated code
+            self.tableWidget.setItem(0,r,QTableWidgetItem(str(weights[r])))
+            self.tableWidget.setItem(1,r,QTableWidgetItem(str(preference[r])))
+            self.tableWidget.setItem(2,r,QTableWidgetItem(str(idealPoint[r])))
+            self.tableWidget.setItem(3,r,QTableWidgetItem(str(worstPoint[r])))
         
     def changeValue(self):
         """Function for clicked signal change values """
         cell=self.tableWidget.currentItem()
         r=cell.row()
         c=cell.column()
-        first=self.tableWidget.item(3, c).text()
-        second=self.tableWidget.item(4, c).text()
-        if cell.row()==2:
+        first=self.tableWidget.item(2, c).text()
+        second=self.tableWidget.item(3, c).text()
+        if cell.row()==1:
             val=cell.text()
             if val=="cost":
                 self.tableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
@@ -369,10 +361,9 @@ class EvalTable(QWidget):
                 self.tableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
             else:
                 self.tableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
-            self.tableWidget.setItem(3,c, QTableWidgetItem(second))
-            self.tableWidget.setItem(4,c, QTableWidgetItem(first))
+            self.tableWidget.setItem(2,c, QTableWidgetItem(second))
+            self.tableWidget.setItem(3,c, QTableWidgetItem(first))
         
-
         
 class Processor(QWidget):
     """Run elaborate options"""
