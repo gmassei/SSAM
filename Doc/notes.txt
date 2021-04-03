@@ -1,0 +1,4 @@
+# for rebuild GUI:
+rm *.pyc
+pyuic5 -o ui_geoSUST.py geoSUST.ui
+pyrcc5 -o resources.py resources.qrc
