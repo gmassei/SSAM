@@ -44,7 +44,7 @@ class SSAM:
         self.iface = iface    # salviamo il riferimento all'interfaccia di QGis
 
     def initGui(self):
-        self.actionSUST = QAction(QIcon(":/plugins/ssam/icon.png"), "SSAM II (Spatial Sustainability Assessment Model)", self.iface.mainWindow())
+        self.actionSUST = QAction(QIcon(":/plugins/SSAM/icon.png"), "SSAM II (Spatial Sustainability Assessment Model)", self.iface.mainWindow())
         self.actionSUST.triggered.connect(self.runSSAM)
         self.iface.addToolBarIcon(self.actionSUST)
         self.iface.addPluginToMenu( "&SSAM II",self.actionSUST )
