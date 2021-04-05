@@ -1,5 +1,5 @@
 <RCC>
-  <qresource prefix="/plugins/SSAM2" >
+  <qresource prefix="/plugins/SSAM" >
      <file>icon.png</file>
   </qresource>
 </RCC>

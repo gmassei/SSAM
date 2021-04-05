@@ -57,17 +57,17 @@ class TOPSIS:
     def runTOPSIS(self):
         """process the matrix and get the ranking values for each alternative"""
         self.stepOne()
-        print('step 1:',self.step1Mtx)
+        #print('step 1:',self.step1Mtx)
         self.stepTwo()
-        print('step 2:', self.step2Mtx)
+        #print('step 2:', self.step2Mtx)
         self.stepThree()
-        print('ideal:', self.ideal)
-        print('worst', self.worst)    
+        #print('ideal:', self.ideal)
+        #print('worst', self.worst)    
         self.stepFour()
-        print('worstSep:', self.worstSeparation)
-        print('idealSep:', self.idealSeparation)
+        #print('worstSep:', self.worstSeparation)
+        #print('idealSep:', self.idealSeparation)
         self.stepFive()
-        print('closeness:',self.relativeCloseness)
+        #print('closeness:',self.relativeCloseness)
         
 def main():
 	print("topsis mcda model")

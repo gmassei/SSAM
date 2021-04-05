@@ -197,7 +197,6 @@ class guiSSAMDialog(QDialog):
         EvalTable from object in evalTableList """
         idTab=self.pages.currentIndex()
         name=self.pages.currentWidget().objectName()
-        print(id,name,self.evalTableList)
         #id=self.toolbox.currentIndex()
         if idTab==0:
             QMessageBox.warning(self.iface.mainWindow(), "SSAM",
@@ -261,7 +260,6 @@ class guiSSAMDialog(QDialog):
             topsis=TOPSIS(self.activeLayer, parameters)
             topsis.runTOPSIS()
             self.process=Processor(self.pages.count(),self.activeLayer,parameters,topsis.relativeCloseness)
-            print(topsis.relativeCloseness)
         self.addAnalisysPage()
         self.parameterToJSON()
         #name = self.findChild(self.pages, "Analysis")
@@ -339,7 +337,6 @@ class EvalTable(QWidget):
        
     def updateTable(self,criteria,weights,preference,idealPoint,worstPoint):
         """ update table in a paage from json values or by parameters input """
-        print(criteria,weights,preference,idealPoint,worstPoint)
         for r in range(len(criteria)): #TODO: remove duplicated code
             self.tableWidget.setItem(0,r,QTableWidgetItem(str(weights[r])))
             self.tableWidget.setItem(1,r,QTableWidgetItem(str(preference[r])))
@@ -385,15 +382,17 @@ class Processor(QWidget):
         return sum(criteriaValues)
             
     def process(self):
-        """ Elaborate """
+        """Fill dimension field with TOPSIS -rank- value """
         provider = self.activeLayer.dataProvider()
         if provider.fieldNameIndex(self.parameters['dimension'])==-1:
-            print(provider.fieldNameIndex(self.parameters['dimension']))
-            self.activeLayer.dataProvider().addAttributes([QgsField(self.parameters['dimension'], QVariant.Double,"",24,4,"")] )
+            self.activeLayer.dataProvider().addAttributes([QgsField(self.parameters['dimension'], QVariant.Double,"",24,6,"")] )
             #edit is a shortcut that replaces layer.beginEditCommand and layer.endEditCommand
         with edit(self.activeLayer):
             for f,i in zip(self.activeLayer.getFeatures(),range(len(self.relativeCloseness))):
-                f[self.parameters['dimension']] = self.relativeCloseness[i] # f[self.parameters['criteria'][0]] + f[self.parameters['criteria'][1]]
+                print("ante:{} {}".format(self.parameters['dimension'],f[self.parameters['dimension']]))
+                #print(self.parameters['dimension'],self.relativeCloseness[i])
+                f[self.parameters['dimension']] = self.relativeCloseness[i]
                 self.activeLayer.updateFeature(f)
-        
+                print("post: {}".format(f[self.parameters['dimension']]))
+
 

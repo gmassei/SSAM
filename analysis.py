@@ -232,6 +232,7 @@ class Sustainability:
         for s,p in zip(self.sliders,self.parameterList):
             print("{},{},{}",s.value(),s.objectName(),p['dimension'])
         dimension=[p['dimension'] for p in self.parameterList]
+        print(dimension)
         sliderWeight=[s.value() for s in self.sliders]
         provider = self.activeLayer.dataProvider()
         if provider.fieldNameIndex('Sustainability')==-1:
@@ -240,6 +241,7 @@ class Sustainability:
         with edit(self.activeLayer):
             for f in self.activeLayer.getFeatures():
                 row=[f[d] for d in dimension]
+                print(row,sliderWeight)
                 wrow=[r*w for r,w in zip(row,sliderWeight)]
                 f['Sustainability'] = sum(wrow) # f[self.parameters['criteria'][0]] + f[self.parameters['criteria'][1]]
                 self.activeLayer.updateFeature(f)
