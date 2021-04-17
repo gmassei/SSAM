@@ -59,10 +59,13 @@ class SSAM:
         self.base_layer = self.iface.activeLayer()
         if ((self.active_layer == None) or (self.active_layer.type() != QgsMapLayer.VectorLayer)):
             result=QMessageBox.warning(self.iface.mainWindow(), "SSAM",
-            ("No active layer found\n" "Please make active one or more vector layer\n" \
+            ("No active layer found\n" "Please make active one \n" \
             "Do you need documents or data ?"), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if result  == QMessageBox.Yes:
                 webbrowser.open("http://maplab.alwaysdata.net/SSAM.html")
+        elif (self.iface.activeLayer().storageType() != 'GPKG'):
+            result=QMessageBox.warning(self.iface.mainWindow(), "SSAM",
+            ("Active layer is not a geopackage format\n"), QMessageBox.Ok)
         else:
             dlg = guiSSAMDialog(self.iface)
             flags = Qt.Window | Qt.WindowSystemMenuHint | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint | Qt.WindowCloseButtonHint
