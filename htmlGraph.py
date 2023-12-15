@@ -46,15 +46,16 @@ def HTMLCharts(data,dimension):
                 colorAxis: {colors: ['red', 'green']},
                 hAxis: {title: '%s'},
                 vAxis: {title: '%s'},
-                };
-                var chartBar = new google.visualization.ColumnChart(document.getElementById('barS_div'));
+                };""" % (str(dimension[3]),str(dimension[1]),str(dimension[2])))
+
+    HTMLfile.write("""    var chartBar = new google.visualization.ColumnChart(document.getElementById('barS_div'));
                 chartBar.draw(dataBar, optionsBarStack);
                 var chartBar = new google.visualization.ColumnChart(document.getElementById('barH_div'));
                 chartBar.draw(dataBar, optionsBarHor);;
                 var chartBubble = new google.visualization.BubbleChart(document.getElementById('bubble_div'));
                 chartBubble.draw(dataBar, optionsBubble)
               }
-            </script>""" % (str(dimension[3]),str(dimension[1]),str(dimension[2])))
+            </script>""" )
             
     HTMLfile.write("""
       </head>

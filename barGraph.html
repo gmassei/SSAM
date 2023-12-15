@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Sustainability box</title>
+        <meta name="keywords" content="">
+        <meta name="description" content="" />
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Archivo+Narrow:400,700" rel="stylesheet" type="text/css">
+        <link href="default.css" rel="stylesheet" type="text/css" media="all" />
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var dataBar = google.visualization.arrayToDataTable([
+['Label', 'Environmental', 'Economic', 'Social'],
+['Piemonte', -0.32925734795082534, 5.552342068711617, 0.40885184944142683],
+["Valle D'Aosta", 6.18161219143823, 1.314902945166593, 4.282536891371404],
+['Lombardia', -0.8031571993592843, 9.417044095705986, 1.5896176028701126],
+['Trentino Alto Adige', 5.593750698089061, 2.4146557547982543, 8.195839563973173],
+['Veneto', 0.08287099756766218, 4.7613362250565245, 1.2070517825512537],
+['Friuli Venezia Giulia', -1.23019971533752, 4.122863229900428, 3.1461064787543824],
+['Liguria', -3.0882826954284193, 1.2201327043915735, -0.1780747476164894],
+['Emilia Romagna', -2.5068715123251213, 5.104602841579843, 2.613852789377244],
+['Toscana', -1.029365002080433, 2.472795524383182, 1.639954025789501],
+['Umbria', -1.6286680085329914, -1.9711784715363123, -0.3297992879797087],
+['Marche', 0.24259157233249806, -0.3873873464271518, -0.42125069804341436],
+['Lazio', -0.4798897488543059, 4.195801338817623, -0.6727404290429566],
+['Abruzzo', -0.05976774975806472, -1.7468851707103705, -1.1068275288350988],
+['Molise', -0.22109093034558977, -6.014793655961526, -3.9817747972582302],
+['Campania', 6.067028183779202, -2.618200713923059, -4.022280021588233],
+['Puglia', -5.8151698053488134, -5.239873817479607, -2.356263203252268],
+['Basilicata', 2.378321488318771, -6.146896640922523, -3.031525958354793],
+['Calabria', -0.24173223292480475, -6.020497686036511, -5.051745180704223],
+['Sicilia', -1.7550884885693476, -4.805610523792748, -2.978514111847995],
+['Sardegna', -1.3576346947099014, -5.625152701721818, 1.046984980394913],
+
+]);
+    var optionsBarStack = {
+            title: 'bars of sustainability',
+            isStacked: 'true',
+            legend:{position:'in'},
+            colors: ['#ff3300', '#33bbe5','#337719'],
+            };
+	var optionsBarHor = {
+            legend:{position:'in'},
+            colors: ['#ff3300', '#33bbe5','#337719'],
+            };
+    var optionsBubble = {
+                title:'Social',
+                colorAxis: {colors: ['red', 'green']},
+                hAxis: {title: 'Environmental'},
+                vAxis: {title: 'Economic'},
+                };    var chartBar = new google.visualization.ColumnChart(document.getElementById('barS_div'));
+                chartBar.draw(dataBar, optionsBarStack);
+                var chartBar = new google.visualization.ColumnChart(document.getElementById('barH_div'));
+                chartBar.draw(dataBar, optionsBarHor);;
+                var chartBubble = new google.visualization.BubbleChart(document.getElementById('bubble_div'));
+                chartBubble.draw(dataBar, optionsBubble)
+              }
+            </script>
+      </head>
+      <body>
+      <div id="logo" class="container"><h1>Charts of sustainability</h1>
+        <br></br>
+        <div id="barH_div" style="width: 1350px; height: 750px;"  border='0'></div>
+        <br><hr>
+        <div id="barS_div" style="width: 1350px; height: 750px;"  border='0'></div>
+        <br><hr>
+        <div id="bubble_div" style="width: 1350px; height: 750px;"  border='0'></div>
+        <br><hr>
+        <hr>
+      </body>
+    </html>

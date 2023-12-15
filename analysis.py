@@ -226,13 +226,13 @@ class Sustainability:
             idxs=self.activeLayer.fields().indexFromName(parameters['dimension'])
             feat = self.activeLayer.getFeatures()
             atts=[f.attributes()[idxs] for f in feat]
-            print(parameters['dimension'],idxs,atts)
+            #print(parameters['dimension'],idxs,atts)
             
     def overallValue(self):
-        for s,p in zip(self.sliders,self.parameterList):
-            print("{},{},{}",s.value(),s.objectName(),p['dimension'])
+        #for s,p in zip(self.sliders,self.parameterList):
+            #print("{},{},{}",s.value(),s.objectName(),p['dimension'])
         dimension=[p['dimension'] for p in self.parameterList]
-        print(dimension)
+        #print(dimension)
         sliderWeight=[s.value() for s in self.sliders]
         provider = self.activeLayer.dataProvider()
         if provider.fieldNameIndex('Sustainability')==-1:
@@ -241,7 +241,7 @@ class Sustainability:
         with edit(self.activeLayer):
             for f in self.activeLayer.getFeatures():
                 row=[f[d] for d in dimension]
-                print(row,sliderWeight)
+                #print(row,sliderWeight)
                 wrow=[r*w for r,w in zip(row,sliderWeight)]
                 f['Sustainability'] = sum(wrow) # f[self.parameters['criteria'][0]] + f[self.parameters['criteria'][1]]
                 self.activeLayer.updateFeature(f)
@@ -284,10 +284,10 @@ class RSDB:
         #self.EnvTEdit.setText(str(listClass))
         self.activeLayer.startEditing()
         decision=[]
-        for feat in self.activeLayer.getFeatures():
-            print("listInput:{} - feat.id():{}-{}".format(listInput,int(feat.id()),listInput[int(feat.id())-1]))
-            DiscValue=self.discretizeDecision(listInput[int(feat.id()-1)],listClass,numberOfClasses)
-            self.activeLayer.changeAttributeValue(feat.id(), fidClass, float(DiscValue))
+        FID=[feat.id() for feat in self.activeLayer.getFeatures()]
+        for f,i in zip(FID,range(len(FID))):
+            DiscValue=self.discretizeDecision(listInput[i],listClass,numberOfClasses)
+            self.activeLayer.changeAttributeValue(f, fidClass, float(DiscValue))
             decision.append(DiscValue)
         self.activeLayer.commitChanges()
         return list(set(decision))
@@ -301,7 +301,7 @@ class RSDB:
         preference= list(chain.from_iterable([parameters['preference'] for parameters in self.parameterList]))
         idealPoint= list(chain.from_iterable([parameters['idealPoint'] for parameters in self.parameterList]))
         worstPoint= list(chain.from_iterable([parameters['worstPoint'] for parameters in self.parameterList]))
-        print(criteria,weights)
+        #print(criteria,weights)
         return criteria, preference,weights,idealPoint,worstPoint
         
     def writeISFfile(self,decision):

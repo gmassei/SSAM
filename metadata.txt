@@ -2,8 +2,8 @@
 name=SSAM
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.99
-description=Spatial Sustainability Assessment Model (SSAM)
-version=1.99.0
+description=Spatial Sustainability Assessment Model (SSAM), based on MCDA model exposed by pyrepo-mcda (https://pyrepo-mcda.readthedocs.io/)
+version=1.99.4
 
 
 # end of mandatory metadata
@@ -12,11 +12,14 @@ version=1.99.0
 
 # Uncomment the following line and add your changelog entries:
 changelog=
+	1.99.4 Improve GUI and models with pyrepo-mcda packages(https://pyrepo-mcda.readthedocs.io/). Algorithms "CODAS", "COPRAS","PROMETHEE II","SAW","VIKOR", "TOPSIS","WASPAS" are implemented.
+	1.99.2 Bugs corrected in discretization for fid non continous and html charts
+	1.99.1 Added control for geopackage input data
 	1.99.0 New project, code rewrite, new gui; the dimensions available for sustainability assessment is modifiable.
-	1.0.2 - changed color in bar charts; wrong bug tracker in metadata fixed (https://github.com/gmassei/SSAM/issues).
-	1.0.1 - corrected bug in rules building when active layer and base layer where in different directory.
-	1.0.0 - objects selected with rules extracted
-	0.9.0 - wrong bug tracker in metadata fixed (https://github.com/gmassei/SSAM/issues)
+	1.0.2 Changed color in bar charts; wrong bug tracker in metadata fixed (https://github.com/gmassei/SSAM/issues).
+	1.0.1 Corrected bug in rules building when active layer and base layer where in different directory.
+	1.0.0 Objects selected with rules extracted
+	0.9.0 Wrong bug tracker in metadata fixed (https://github.com/gmassei/SSAM/issues)
 
 
 # tags are comma separated with spaces allowed

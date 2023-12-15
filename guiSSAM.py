@@ -40,12 +40,15 @@ import shutil
 import json
 import pickle
 
-from .TOPSIS import *
+#from .scikitMCDA import *
+from .pyrepoMCDA import *
 from . import DOMLEM
 from . import htmlGraph
 from .analysis import *
 
-#from .ui_geoSUST import Ui_Dialog
+
+
+
 
 
 class guiSSAMDialog(QDialog):
@@ -82,6 +85,7 @@ class guiSSAMDialog(QDialog):
         self.pageNameCbBx.setEditable(True)
         self.layout.addWidget(self.pageNameCbBx,0,1)
                
+        
         self.add_button = QPushButton()#"Add page")
         self.add_button.setToolTip("Add dimension")
         self.layout.addWidget(self.add_button, 1, 1)
@@ -118,14 +122,22 @@ class guiSSAMDialog(QDialog):
         self.run_button.setIconSize(QSize(48,48))
         self.run_button.setShortcut('Ctrl+P')
         
-        self.layout.addWidget(self.pages, 0,0,6,1)
+
+        self.selectMCDA=QComboBox(self)
+        self.selectMCDA.setToolTip("select MCDA method")
+        methodsList=["CODAS", "COPRAS","PROMETHEE II","SAW","VIKOR", "TOPSIS","WASPAS"]#,"SPOTIS","EDAS","MABAC","MULTIMOORA"]
+        self.selectMCDA.addItems(methodsList)
+        self.layout.addWidget(self.selectMCDA,5,1)
+        
+
+        
+        self.layout.addWidget(self.pages, 0,0,7,1)
         self.pages.addTab(self.getField, "Setting")
         
         #activePage = self.pages.currentIndex()
         self.pages.setContextMenuPolicy(Qt.CustomContextMenu)
         self.pages.customContextMenuRequested.connect(self.popMenu)
         
-
         
 
     def popMenu(self):
@@ -254,12 +266,48 @@ class guiSSAMDialog(QDialog):
 
     
     def run(self):
-        """Run TOPSIS models """
+        """Run MCDA models """
         self.retrieveParameters()
         for parameters in self.parameterList:
-            topsis=TOPSIS(self.activeLayer, parameters)
-            topsis.runTOPSIS()
-            self.process=Processor(self.pages.count(),self.activeLayer,parameters,topsis.relativeCloseness)
+            MCDAmethod=self.selectMCDA.currentText()
+            if(MCDAmethod == "CODAS"):
+                    codas=pyCODAS(self.activeLayer, parameters)
+                    codas.runCODAS()
+                    print(codas.rank_results)
+                    self.process=Processor(self.pages.count(),self.activeLayer,parameters,codas.scores)
+            elif(MCDAmethod=="COPRAS"):
+                    copras=pyCOPRAS(self.activeLayer, parameters)
+                    copras.runCOPRAS()
+                    print(copras.rank_results)
+                    self.process=Processor(self.pages.count(),self.activeLayer,parameters,copras.scores)
+            elif(MCDAmethod=="VIKOR"):
+                    vikor=pyVIKOR(self.activeLayer, parameters)
+                    vikor.runVIKOR()
+                    print(vikor.rank_results)
+                    self.process=Processor(self.pages.count(),self.activeLayer,parameters,vikor.scores)
+                    
+            elif(MCDAmethod=="SAW"):
+                    saw=pyVIKOR(self.activeLayer, parameters)
+                    saw.runVIKOR()
+                    print(saw.rank_results)
+                    self.process=Processor(self.pages.count(),self.activeLayer,parameters,saw.scores)
+                    
+            elif(MCDAmethod=="PROMETHEE II"):
+                    promethee=pyPROMETHEE(self.activeLayer, parameters)
+                    promethee.runPROMETHEE()
+                    print(promethee.rank_results)
+                    self.process=Processor(self.pages.count(),self.activeLayer,parameters,promethee.scores)
+            elif(MCDAmethod=="TOPSIS"):
+                    topsis=pyTOPSIS(self.activeLayer, parameters)
+                    topsis.runTOPSIS()
+                    print(topsis.rank_results)
+                    self.process=Processor(self.pages.count(),self.activeLayer,parameters,topsis.scores)
+            elif(MCDAmethod=="WASPAS"):
+                    waspas=pyWASPAS (self.activeLayer, parameters)
+                    waspas.runWASPAS()
+                    print(waspas.rank_results)
+                    self.process=Processor(self.pages.count(),self.activeLayer,parameters,waspas.scores)
+                    
         self.addAnalisysPage()
         self.parameterToJSON()
         #name = self.findChild(self.pages, "Analysis")
@@ -327,7 +375,7 @@ class EvalTable(QWidget):
         for r in range(len(self.selectedField)): #TODO: remove duplicated code
             idx = self.activeLayer.fields().indexFromName(self.selectedField[r])
             self.tableWidget.setItem(0,r,QTableWidgetItem("1.0"))
-            self.tableWidget.setItem(1,r,QTableWidgetItem("gain"))
+            self.tableWidget.setItem(1,r,QTableWidgetItem("MAX"))
             self.tableWidget.setItem(2,r,QTableWidgetItem(str(self.activeLayer.maximumValue(idx))))
             self.tableWidget.setItem(3,r,QTableWidgetItem(str(self.activeLayer.minimumValue(idx))))
         self.tableLayout.addStretch(1)
@@ -352,10 +400,10 @@ class EvalTable(QWidget):
         second=self.tableWidget.item(3, c).text()
         if cell.row()==1:
             val=cell.text()
-            if val=="cost":
-                self.tableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
-            elif val=="gain":
-                self.tableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
+            if val=="MIN":
+                self.tableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("MAX"))
+            elif val=="MAX":
+                self.tableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("MIN"))
             else:
                 self.tableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
             self.tableWidget.setItem(2,c, QTableWidgetItem(second))
@@ -364,12 +412,12 @@ class EvalTable(QWidget):
         
 class Processor(QWidget):
     """Run elaborate options"""
-    def __init__(self,numPages,activeLayer,parameters,relativeCloseness):
+    def __init__(self,numPages,activeLayer,parameters,score):
         QWidget.__init__(self)
         self.layout = QGridLayout()
         self.activeLayer=activeLayer
         self.parameters=parameters
-        self.relativeCloseness=relativeCloseness
+        self.score=score
         self.lblNum = QLabel("pages count {}".format(self.activeLayer.name()), self)
         self.layout.addWidget(self.lblNum,0,0)
         #self.getCriteriaValue()
@@ -379,20 +427,20 @@ class Processor(QWidget):
         """ Sum up all criteria values NOT YET USED"""
         feat = aLayer.getFeatures()
         criteriaValues=[f[criteria] for f in feat]
+        print(criteriaValues)
         return sum(criteriaValues)
             
     def process(self):
-        """Fill dimension field with TOPSIS -rank- value """
+        """Fill dimension field with MCDA -rank- value """
         provider = self.activeLayer.dataProvider()
         if provider.fieldNameIndex(self.parameters['dimension'])==-1:
             self.activeLayer.dataProvider().addAttributes([QgsField(self.parameters['dimension'], QVariant.Double,"",24,6,"")] )
             #edit is a shortcut that replaces layer.beginEditCommand and layer.endEditCommand
         with edit(self.activeLayer):
-            for f,i in zip(self.activeLayer.getFeatures(),range(len(self.relativeCloseness))):
-                print("ante:{} {}".format(self.parameters['dimension'],f[self.parameters['dimension']]))
-                #print(self.parameters['dimension'],self.relativeCloseness[i])
-                f[self.parameters['dimension']] = self.relativeCloseness[i]
+            for f,i in zip(self.activeLayer.getFeatures(),self.score):
+                print("score",self.score)
+                f[self.parameters['dimension']] = float(i)
                 self.activeLayer.updateFeature(f)
-                print("post: {}".format(f[self.parameters['dimension']]))
+
 
 
